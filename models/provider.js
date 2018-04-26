@@ -1,5 +1,12 @@
 module.exports = function(sequelize, DataTypes) {
-  var User = sequelize.define("User", {
+  var Provider = sequelize.define("Provider", {
+    NPINumber: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      validate: {
+        len: [1]
+      }
+    },
     firstName: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -14,20 +21,6 @@ module.exports = function(sequelize, DataTypes) {
         len: [1]
       }
     },
-    email: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        len: [1]
-      }
-    },
-    password: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        len: [1]
-      }
-    },
     address: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -35,14 +28,14 @@ module.exports = function(sequelize, DataTypes) {
         len: [1]
       }
     },
-    dateOfBirth: {
+    specialty: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
         len: [1]
       }
     },
-    plan: {
+    phone: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
@@ -51,5 +44,5 @@ module.exports = function(sequelize, DataTypes) {
     },
   });
 
-  return User;
+  return Provider;
 };
