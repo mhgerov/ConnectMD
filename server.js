@@ -6,6 +6,9 @@ var PORT = process.env.PORT || 3000;
 var htmlRouter = require('./controllers/html-routes.js');
 var apiRouter = require('./controllers/api-routes.js');
 
+// Requiring our models for syncing
+var db = require("./models");
+
 app.engine('handlebars', exphbs({defaultLayout: 'main'}));
 app.set('view engine', 'handlebars');
 
@@ -17,4 +20,9 @@ app.use(express.static('public'));
 app.use('/',htmlRouter);
 app.use('/api',apiRouter);
 
-app.listen(PORT, () => console.log('Listening on port '+PORT));
+
+db.sequelize.sync({ force: true }).then(function() {
+  app.listen(PORT, function() {
+    console.log("App listening on PORT " + PORT);
+  });
+});
