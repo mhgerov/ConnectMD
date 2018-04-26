@@ -44,5 +44,9 @@ module.exports = function(sequelize, DataTypes) {
     },
   });
 
+  Provider.associate = function(models) {
+    // associations can be defined here
+	Provider.hasMany(models.Appointment);
+  };
   return Provider;
 };

@@ -1,19 +1,28 @@
-var express = require('express');
-var exphbs = require('express-handlebars');
-var bodyParser = require('body-parser');
-var app = express();
+//Set port number
 var PORT = process.env.PORT || 3000;
+
+//Load Express
+var express = require('express');
+var app = express();
+
+//Load Handlebars
+var exphbs = require('express-handlebars');
+app.engine('handlebars', exphbs({defaultLayout: 'main'}));
+
+//Load body-parser
+var bodyParser = require('body-parser');
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.json());
+
+//Routing
 var htmlRouter = require('./controllers/html-routes.js');
 var apiRouter = require('./controllers/api-routes.js');
 
-// Requiring our models for syncing
+//Load Sequelize
 var db = require("./models");
 
-app.engine('handlebars', exphbs({defaultLayout: 'main'}));
 app.set('view engine', 'handlebars');
 
-app.use(bodyParser.urlencoded({ extended: false }))
-app.use(bodyParser.json());
 
 app.use(express.static('public'));
 
