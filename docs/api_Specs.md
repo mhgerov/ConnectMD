@@ -59,5 +59,22 @@ response: JSON containing:
 
 ## APPOINTMENTS
 
-### PUT /api/user/:userid
+### PUT /api/user/:userid/appointments
 
+request: JSON containing
+* npi
+* appt_date (YYYY-MM-DD HH:MM) 24hr format
+
+response: JSON containing appointment id
+
+### GET /api/user/:userid/appointments/
+
+request: none
+
+response: JSON containing all appointments for user
+
+### DELETE /api/user/:userid/appointments/:apptid
+
+request: none
+
+response: http response
