@@ -1,5 +1,11 @@
 # ConnectMD API
 
+## PAGES
+
+* / = landing
+* /home = user dashboard (includes upcoming appts, map, etc.)
+* /new-appointment = make an apointment form
+
 ## USERS
 
 ### PUT /api/user
