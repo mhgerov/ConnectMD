@@ -23,17 +23,9 @@ router.post('/login', function (req, res) {
 router.put('/user', function (req, res) {
 	//Checks if any JSON was sent at all
 	if (!req.body) return res.sendStatus(400);
-	//console.log('Incoming:');
-	//console.log(req.body);
-	bcrypt.hash(req.body.password, saltRounds, function (err, hash) {
-		//remove plain password, then attach hash
-		delete req.body.password;
-		req.body.password_hash = hash;
-		//console.log('Outgoing:');
-		//console.log(req.body);
-		db.User.create(req.body).then(user => {
-			res.send(user);
-		});
+	req.body.password_hash = req.body.password;
+	db.User.create(req.body).then(user => {
+		res.send(user);
 	});
 });
 

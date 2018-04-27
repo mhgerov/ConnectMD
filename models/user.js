@@ -1,3 +1,6 @@
+var bcrypt = require('bcrypt');
+const saltRounds = 10;
+
 'use strict';
 module.exports = (sequelize, DataTypes) => {
 	var User = sequelize.define('User', {
@@ -49,5 +52,12 @@ module.exports = (sequelize, DataTypes) => {
 		// associations can be defined here
 		User.hasMany(models.Appointment);
 	};
+	User.hook('beforeCreate', (user,options) => {
+		return bcrypt.hash(user.password_hash, saltRounds).then(function (hash) {
+			console.log('hashing');
+			user.password_hash = hash;
+		});
+	});
+		
 	return User;
 };
