@@ -6,10 +6,20 @@ const saltRounds = 10;
 
 var db = require('../models/index.js');
 
-router.get('/test', function (req, res) {
-	res.sendStatus(200);
+//Sends loging credentials to be verified (email, password)
+router.post('/login', function (req, res) {
+	db.User.findOne({where: {email: req.body.email}}).then(user => {
+		if (!user) return res.status(404).send('User not found!');
+		bcrypt.compare(req.body.password, user.dataValues.password_hash, (err, result) => {
+			if (err) return res.send(err);
+			console.log('Comparing passwords...');
+			console.log(result);
+			res.send(result);	
+		});
+	});
 });
 
+//Creates User
 router.put('/user', function (req, res) {
 	//Checks if any JSON was sent at all
 	if (!req.body) return res.sendStatus(400);
