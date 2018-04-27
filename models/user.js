@@ -3,44 +3,44 @@ module.exports = (sequelize, DataTypes) => {
 	var User = sequelize.define('User', {
 		email: {
 			type: DataTypes.STRING,
+			allowNull: false,
 			validate: {
 				isEmail: true,
-				notNull: true,
 			}
 		},
 		password_hash: DataTypes.STRING,
 		first_name: {
 			type: DataTypes.STRING,
+			allowNull: false,
 			validate: {
-				notNull: true,
 				notEmpty: true
 			}
 		},
 		last_name: {
 			type: DataTypes.STRING,
+			allowNull: false,
 			validate: {
-				notNull: true,
 				notEmpty: true
 			}
 		},
 		date_of_birth: {
 			type: DataTypes.DATE,
+			allowNull: false,
 			validate: {
-				notNull: true,
 				isDate: true
 			}
 		},
 		address: {
 			type: DataTypes.STRING,
+			allowNull: false,
 			validate: {
-				notNull: true,
 				notEmpty: true,
 			}
 		},
 		care_plan: {
 			type: DataTypes.STRING,
+			allowNull: false,
 			validate: {
-				notNull: true,
 				notEmpty: true,
 			}
 		},

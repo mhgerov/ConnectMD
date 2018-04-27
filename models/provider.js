@@ -4,7 +4,6 @@ module.exports = function(sequelize, DataTypes) {
 		npi: {
 			type: DataTypes.INTEGER,
 			allowNull: false,
-			primaryKey: true,
 			validate: {
 				notEmpty: true,
 				isNumerica: true,
