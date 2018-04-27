@@ -6,5 +6,9 @@ router.get('/test', function (req, res) {
 	res.sendStatus(200);
 });
 
+router.put('/user', function (req, res) {
+
+});
+
 module.exports = router;
 
