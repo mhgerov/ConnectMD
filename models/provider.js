@@ -1,11 +1,14 @@
 'use strict';
 module.exports = function(sequelize, DataTypes) {
 	var Provider = sequelize.define("Provider", {
-		npin: {
+		npi: {
 			type: DataTypes.INTEGER,
 			allowNull: false,
+			primaryKey: true,
 			validate: {
-				notEmpty: true
+				notEmpty: true,
+				isNumerica: true,
+				len[10,10]
 			}
 		},
 		first_name: {
