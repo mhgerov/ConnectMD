@@ -1,59 +1,53 @@
-module.exports = function(sequelize, DataTypes) {
-	var User = sequelize.define("User", {
-		firstName: {
-			type: DataTypes.STRING,
-			allowNull: false,
-			validate: {
-				len: [1]
-			}
-		},
-		lastName: {
-			type: DataTypes.STRING,
-			allowNull: false,
-			validate: {
-				len: [1]
-			}
-		},
+'use strict';
+module.exports = (sequelize, DataTypes) => {
+	var User = sequelize.define('User', {
 		email: {
 			type: DataTypes.STRING,
 			allowNull: false,
 			validate: {
-				len: [1]
+				isEmail: true,
 			}
 		},
-		password: {
+		password_hash: DataTypes.STRING,
+		first_name: {
 			type: DataTypes.STRING,
 			allowNull: false,
 			validate: {
-				len: [1]
+				notEmpty: true
+			}
+		},
+		last_name: {
+			type: DataTypes.STRING,
+			allowNull: false,
+			validate: {
+				notEmpty: true
+			}
+		},
+		date_of_birth: {
+			type: DataTypes.DATE,
+			allowNull: false,
+			validate: {
+				isDate: true
 			}
 		},
 		address: {
 			type: DataTypes.STRING,
 			allowNull: false,
 			validate: {
-				len: [1]
+				notEmpty: true,
 			}
 		},
-		dateOfBirth: {
+		care_plan: {
 			type: DataTypes.STRING,
 			allowNull: false,
 			validate: {
-				len: [1]
+				notEmpty: true,
 			}
 		},
-		plan: {
-			type: DataTypes.STRING,
-			allowNull: false,
-			validate: {
-				len: [1]
-			}
-		},
-	});
-	
-  User.associate = function(models) {
-	  User.hasMany(models.Appointment);
-  }
-
+	}, {});
+	User.associate = function(models) {
+		// associations can be defined here
+		User.hasMany(models.Appointment);
+	};
 	return User;
 };
