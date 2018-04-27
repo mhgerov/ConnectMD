@@ -44,7 +44,7 @@ module.exports = (sequelize, DataTypes) => {
 				notEmpty: true,
 			}
 		},
-	}, {});
+	}, {indexes:[{fields:['email']}]});
 	User.associate = function(models) {
 		// associations can be defined here
 		User.hasMany(models.Appointment);
