@@ -7,7 +7,11 @@ router.get('/test', function (req, res) {
 });
 
 router.put('/user', function (req, res) {
-
+	//Checks if any JSON was sent at all
+	if (!req.body) return res.sendStatus(400);
+	console.log('Incoming:');
+	console.log(req.body);
+	res.sendStatus(200);
 });
 
 module.exports = router;

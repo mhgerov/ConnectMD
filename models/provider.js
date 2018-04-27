@@ -8,7 +8,7 @@ module.exports = function(sequelize, DataTypes) {
 			validate: {
 				notEmpty: true,
 				isNumerica: true,
-				len[10,10]
+				len: [10,10],
 			}
 		},
 		first_name: {
