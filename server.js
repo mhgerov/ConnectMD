@@ -22,11 +22,6 @@ app.use(bodyParser.json());
 var session = require('express-session');
 app.use(session({secret:'pickle rick',resave:true,saveUnintialized:true}));
 
-//Load Passport
-var passport = require('passport');
-app.use(passport.initialize());
-app.use(passport.session());
-
 //Routing
 var htmlRouter = require('./controllers/html-routes.js');
 var apiRouter = require('./controllers/api-routes.js');
@@ -34,10 +29,20 @@ app.use('/',htmlRouter);
 app.use('/api',apiRouter);
 
 //Load Sequelize
-var db = require("./models");
+var models = require("./models");
 
-db.sequelize.sync({force:false}).then(function() {
-  app.listen(PORT, function() {
-    console.log("App listening on PORT " + PORT);
-  });
+models.sequelize.sync({force:false}).then(function() {
+});
+
+//Load Passport
+var passport = require('passport');
+app.use(passport.initialize());
+app.use(passport.session());
+
+//Load Passport Strategies
+require('./config/passport.js')(passport,models.user);
+
+//Start Server
+app.listen(PORT, function() {
+	console.log("App listening on PORT " + PORT);
 });
