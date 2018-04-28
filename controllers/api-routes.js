@@ -2,7 +2,6 @@ var express = require('express');
 var router = express.Router();
 var path = require('path');
 var bcrypt = require('bcrypt');
-const saltRounds = 10;
 
 var db = require('../models/index.js');
 
