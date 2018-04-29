@@ -6,6 +6,11 @@ router.get('/', function (req, res) {
 	res.render('landing');
 });
 
+router.get('/home', function (req, res) {
+	console.log('rendering home page...');
+	res.render('home');
+});
+
 router.get('/signup', function (req, res) {
 	res.render('signup');
 });

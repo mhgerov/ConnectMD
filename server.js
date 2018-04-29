@@ -22,11 +22,6 @@ app.use(bodyParser.json());
 var session = require('express-session');
 app.use(session({secret:'pickle rick',resave:true,saveUnintialized:true}));
 
-//Routing
-var htmlRouter = require('./controllers/html-routes.js');
-var apiRouter = require('./controllers/api-routes.js');
-app.use('/',htmlRouter);
-app.use('/api',apiRouter);
 
 //Load Sequelize
 var models = require("./models");
@@ -36,11 +31,44 @@ models.sequelize.sync({force:false}).then(function() {
 
 //Load Passport
 var passport = require('passport');
+var LocalStrategy = require('passport-local').Strategy;
+var bcrypt = require('bcrypt');
+
+passport.use(new LocalStrategy({usernameField:'email'},function(username, password, done) {
+	console.log('Looking for username: '+username)
+	models.User.findOne({where:{email:username}}).then( (user) =>{
+		if (!user) { return done(null, false); }
+		bcrypt.compare(password,user.password).then( (res) => {
+			res ? done(null,user) : done(null, false);
+		});
+	});
+}))
+
+passport.serializeUser(function(user, done) {
+	console.log('connect-md: serializing...');
+  	done(null, user.id);
+});
+
+passport.deserializeUser(function(id, done) {
+	console.log('connect-md: deserializing...');
+	models.User.findById(id).then(function (user) {
+		console.log('deserialize success '+user.email);
+		done(null, user);
+	});
+});
+
+
 app.use(passport.initialize());
 app.use(passport.session());
 
 //Load Passport Strategies
-require('./config/passport.js')(passport,models.user);
+//require('./config/passport.js')(passport,models.user);
+
+//Routing
+var htmlRouter = require('./controllers/html-routes.js');
+var apiRouter = require('./controllers/api-routes.js');
+app.use('/',htmlRouter);
+app.use('/api',apiRouter);
 
 //Start Server
 app.listen(PORT, function() {

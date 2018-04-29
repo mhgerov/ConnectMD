@@ -34,7 +34,8 @@
 </form>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script>
-	$('form').on('submit', function() {
+	$('form').on('submit', function(evt) {
+		evt.preventDefault();
 		var newUser = {};
 		newUser.email = $('input:email').val();
 		newUser.password = $('input:password').val();

@@ -6,8 +6,13 @@ var models = require('../models');
 var passport = require('passport');
 
 //Sends loging credentials to be verified (email, password)
-router.post('/signin', function (req, res) {
-});
+router.post('/signin', 
+		passport.authenticate('local'),
+		function(req,res) {
+			console.log('-----LOGIN SUCCESS------');
+			res.redirect('/home');
+		}
+);
 
 //Creates User
 router.put('/user', function (req,res) {

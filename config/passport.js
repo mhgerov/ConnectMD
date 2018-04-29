@@ -5,10 +5,11 @@ module.exports = function(passport, user) {
 	var LocalStrategy = require('passport-local').Strategy;
 
 	passport.use(new LocalStrategy(function(email, password, done) {
+		console.log('Looking up user...');
     	User.findOne({email:email}, function (err, user) {
       		if (err) { return done(err); }
       		if (!user) { return done(null, false); }
-			bcrypt.compare(password,user.password).then( (res) => return done(null,res));
+			bcrypt.compare(password,user.password).then( (res) => {return done(null,res)});
     	});
   	}))
 

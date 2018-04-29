@@ -6,7 +6,7 @@
 	</div>
 	<div>
 	<label>Password:</label>
-	<input type="text" name="password"/>
+	<input type="password" name="password"/>
 	</div>
 	<div>
 	<input type="submit" value="Submit"/>
@@ -14,13 +14,15 @@
 </form>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script>
-	$('form').on('submit', function() {
+	$('form').submit(function(evt) {
+		evt.preventDefault();
 		var loginInfo = {};
-		loginInfo.email = $('input:email').val();
-		loginInfo.password = $('input:password').val();
+		loginInfo.email = $('input[name="email"]').val();
+		loginInfo.password = $('input[name="password"]').val();
+		console.table(loginInfo);
 		$.ajax({
 			type: "POST",
-			url: '/api/signin,
+			url: '/api/signin',
 			data: loginInfo,
 			dataType: 'application/json'
 		});		
