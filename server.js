@@ -18,6 +18,9 @@ var bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json());
 
+//Load cookie-parser
+app.use(require('cookie-parser')());
+
 //Load Express Session
 var session = require('express-session');
 app.use(session({secret:'pickle rick',resave:true,saveUnintialized:true}));

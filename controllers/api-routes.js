@@ -5,13 +5,15 @@ var bcrypt = require('bcrypt');
 var models = require('../models');
 var passport = require('passport');
 
-//Sends loging credentials to be verified (email, password)
+//Sends login credentials to be verified (email, password)
 router.post('/signin', 
-		passport.authenticate('local'),
+		passport.authenticate('local',{successRedirect: '/home'})
+		/*
 		function(req,res) {
 			console.log('-----LOGIN SUCCESS------');
 			res.redirect('/home');
 		}
+		*/
 );
 
 //Creates User

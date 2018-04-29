@@ -6,7 +6,7 @@ router.get('/', function (req, res) {
 	res.render('landing');
 });
 
-router.get('/home', function (req, res) {
+router.get('/home', require('connect-ensure-login').ensureLoggedIn('/'), function (req, res) {
 	console.log('rendering home page...');
 	res.render('home');
 });
