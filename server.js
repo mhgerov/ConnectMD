@@ -10,6 +10,19 @@ var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var bcrypt = require('bcrypt');
 
+passport.serializeUser(function(user, done) {
+	console.log('connect-md: serializing...');
+  	done(null, user.id);
+});
+
+passport.deserializeUser(function(id, done) {
+	console.log('connect-md: deserializing...');
+	models.User.findById(id).then(function (user) {
+		console.log('deserialize success '+user.email);
+		done(null, user);
+	});
+});
+
 passport.use(new LocalStrategy({usernameField:'email'},function(username, password, done) {
 	console.log('Looking for username: '+username)
 	models.User.findOne({where:{email:username}}).then( (user) =>{
@@ -26,18 +39,7 @@ passport.use(new LocalStrategy({usernameField:'email'},function(username, passwo
 	});
 }))
 
-passport.serializeUser(function(user, done) {
-	console.log('connect-md: serializing...');
-  	done(null, user.id);
-});
 
-passport.deserializeUser(function(id, done) {
-	console.log('connect-md: deserializing...');
-	models.User.findById(id).then(function (user) {
-		console.log('deserialize success '+user.email);
-		done(null, user);
-	});
-});
 
 //Load Handlebars
 var exphbs = require('express-handlebars');

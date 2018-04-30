@@ -1,37 +1,21 @@
 'use strict';
 module.exports = function(sequelize, DataTypes) {
 	var Provider = sequelize.define("Provider", {
-		npi: {
-			type: DataTypes.INTEGER,
-			allowNull: false,
-			validate: {
-				notEmpty: true,
-				isNumerica: true,
-				len: [10,10],
-			}
-		},
-		first_name: {
+		name: {
 			type: DataTypes.STRING,
 			allowNull: false,
 			validate: {
 				notEmpty: true
 			}
 		},
-		last_name: {
+		address_line_1: {
 			type: DataTypes.STRING,
 			allowNull: false,
 			validate: {
 				notEmpty: true
 			}
 		},
-		address: {
-			type: DataTypes.STRING,
-			allowNull: false,
-			validate: {
-				notEmpty: true
-			}
-		},
-		specialty: {
+		address_line_2: {
 			type: DataTypes.STRING,
 			allowNull: false,
 			validate: {
@@ -45,6 +29,13 @@ module.exports = function(sequelize, DataTypes) {
 				notEmpty: true
 			}
 		}
+		specialty: {
+			type: DataTypes.STRING,
+			allowNull: false,
+			validate: {
+				notEmpty: true
+			}
+		},
 	});
 
 	Provider.associate = function(models) {
