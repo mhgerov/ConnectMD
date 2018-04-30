@@ -37,16 +37,16 @@
 	$('form').on('submit', function(evt) {
 		evt.preventDefault();
 		var newUser = {};
-		newUser.email = $('input:email').val();
-		newUser.password = $('input:password').val();
-		newUser.first_name = $('input:first_name').val();
-		newUser.last_name = $('input:last_name').val();
-		newUser.date_of_birth = $('input:date_of_birth').val();
-		newUser.address = $('input:address').val();
-		newUser.care_plan = $('input:care_plan').val();
+		newUser.email = $('input[name="email"]').val();
+		newUser.password = $('input[name="password"]').val();
+		newUser.first_name = $('input[name="first_name"]').val();
+		newUser.last_name = $('input[name="last_name"]').val();
+		newUser.date_of_birth = $('input[name="date_of_birth"]').val();
+		newUser.address = $('input[name="address"]').val();
+		newUser.care_plan = $('input[name="care_plan"]').val();
 		$.ajax({
 			type: "PUT",
-			url: '/api/user,
+			url: '/api/user',
 			data: newUser,
 			dataType: 'application/json'
 		});		

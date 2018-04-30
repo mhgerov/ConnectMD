@@ -5,6 +5,40 @@ var PORT = process.env.PORT || 3000;
 var express = require('express');
 var app = express();
 
+//Load Passport
+var passport = require('passport');
+var LocalStrategy = require('passport-local').Strategy;
+var bcrypt = require('bcrypt');
+
+passport.use(new LocalStrategy({usernameField:'email'},function(username, password, done) {
+	console.log('Looking for username: '+username)
+	models.User.findOne({where:{email:username}}).then( (user) =>{
+		if (!user) { return done(null, false); }
+		bcrypt.compare(password,user.password).then( (res) => {
+			if(res) {
+				console.log('passport authenticate success!');
+				return done(null,user)
+			} else {
+				console.log('Wrong password!');
+				return done(null, false);
+			}
+		});
+	});
+}))
+
+passport.serializeUser(function(user, done) {
+	console.log('connect-md: serializing...');
+  	done(null, user.id);
+});
+
+passport.deserializeUser(function(id, done) {
+	console.log('connect-md: deserializing...');
+	models.User.findById(id).then(function (user) {
+		console.log('deserialize success '+user.email);
+		done(null, user);
+	});
+});
+
 //Load Handlebars
 var exphbs = require('express-handlebars');
 app.engine('handlebars', exphbs({defaultLayout: 'main'}));
@@ -25,44 +59,15 @@ app.use(require('cookie-parser')());
 var session = require('express-session');
 app.use(session({secret:'pickle rick',resave:true,saveUnintialized:true}));
 
+app.use(passport.initialize());
+app.use(passport.session());
 
 //Load Sequelize
 var models = require("./models");
 
-models.sequelize.sync({force:false}).then(function() {
-});
-
-//Load Passport
-var passport = require('passport');
-var LocalStrategy = require('passport-local').Strategy;
-var bcrypt = require('bcrypt');
-
-passport.use(new LocalStrategy({usernameField:'email'},function(username, password, done) {
-	console.log('Looking for username: '+username)
-	models.User.findOne({where:{email:username}}).then( (user) =>{
-		if (!user) { return done(null, false); }
-		bcrypt.compare(password,user.password).then( (res) => {
-			res ? done(null,user) : done(null, false);
-		});
-	});
-}))
-
-passport.serializeUser(function(user, done) {
-	console.log('connect-md: serializing...');
-  	done(null, user.id);
-});
-
-passport.deserializeUser(function(id, done) {
-	console.log('connect-md: deserializing...');
-	models.User.findById(id).then(function (user) {
-		console.log('deserialize success '+user.email);
-		done(null, user);
-	});
-});
+models.sequelize.sync({force:false});
 
 
-app.use(passport.initialize());
-app.use(passport.session());
 
 //Load Passport Strategies
 //require('./config/passport.js')(passport,models.user);
