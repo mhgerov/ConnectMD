@@ -45,10 +45,12 @@
 		newUser.address = $('input[name="address"]').val();
 		newUser.care_plan = $('input[name="care_plan"]').val();
 		$.ajax({
-			type: "PUT",
+			type: "POST",
 			url: '/api/user',
 			data: newUser,
 			dataType: 'application/json'
+		}).then(function (res) {
+			window.location = "/";
 		});		
 	});
 </script>

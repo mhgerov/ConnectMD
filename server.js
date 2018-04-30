@@ -10,17 +10,24 @@ var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var bcrypt = require('bcrypt');
 
+/*
 passport.serializeUser(function(user, done) {
-	console.log('connect-md: serializing...');
   	done(null, user.id);
 });
-
 passport.deserializeUser(function(id, done) {
-	console.log('connect-md: deserializing...');
 	models.User.findById(id).then(function (user) {
 		console.log('deserialize success '+user.email);
 		done(null, user);
 	});
+});
+*/
+
+passport.serializeUser(function(user, cb) {
+  cb(null, user);
+});
+
+passport.deserializeUser(function(obj, cb) {
+  cb(null, obj);
 });
 
 passport.use(new LocalStrategy({usernameField:'email'},function(username, password, done) {
@@ -38,7 +45,6 @@ passport.use(new LocalStrategy({usernameField:'email'},function(username, passwo
 		});
 	});
 }))
-
 
 
 //Load Handlebars
