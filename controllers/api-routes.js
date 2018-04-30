@@ -7,7 +7,7 @@ var passport = require('passport');
 
 //Sends login credentials to be verified (email, password)
 router.post('/signin', 
-		passport.authenticate('local',{successRedirect: '/home'})
+	passport.authenticate('local',{successReturnToOrRedirect: '/home'})
 );
 
 //Creates User
