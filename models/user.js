@@ -7,11 +7,12 @@ module.exports = (sequelize, DataTypes) => {
 		email: {
 			type: DataTypes.STRING,
 			allowNull: false,
+			//unique: true,
 			validate: {
 				isEmail: true,
 			}
 		},
-		password_hash: DataTypes.STRING,
+		password: DataTypes.STRING,
 		first_name: {
 			type: DataTypes.STRING,
 			allowNull: false,
@@ -53,9 +54,8 @@ module.exports = (sequelize, DataTypes) => {
 		User.hasMany(models.Appointment);
 	};
 	User.hook('beforeCreate', (user,options) => {
-		return bcrypt.hash(user.password_hash, saltRounds).then(function (hash) {
-			console.log('hashing');
-			user.password_hash = hash;
+		return bcrypt.hash(user.password, saltRounds).then(function (hash) {
+			user.password = hash;
 		});
 	});
 		
