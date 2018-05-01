@@ -6,17 +6,17 @@ var models = require('../models');
 var passport = require('passport');
 
 //Sends login credentials to be verified (email, password)
-router.post('/signin', 
-	passport.authenticate('local',{successReturnToOrRedirect: '/home'})
-);
+router.post('/signin', passport.authenticate('local',{failureRedirect: '/'}) , function (req,res) {
+	console.log('authenticate success, redirecting...');
+	res.json('/home');
+});
 
 //Creates User
-router.put('/user', function (req,res) {
-	console.log('PUT /api/user Creating new user...')
-	var email = req.body.user;
-	var pwd = req.body.password;
+router.post('/user', function (req,res) {
+	console.log('POST /api/user Creating new user...')
 	models.User.create(req.body).then( (user) => {
-		res.redirect('/');	
+		console.log('User built, redirecting...');
+		res.json('/');
 	});
 });
 

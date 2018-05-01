@@ -41,11 +41,9 @@
 		loginInfo.email = $('input[name="email"]').val();
 		loginInfo.password = $('input[name="password"]').val();
 		console.table(loginInfo);
-		$.ajax({
-			type: "POST",
-			url: '/api/signin',
-			data: loginInfo,
-			dataType: 'application/json'
-		}).then((res) => console.log('anything'));
+		$.post('/api/signin',loginInfo,).then( (res) => {
+			console.log(res);		
+			window.location.replace(res);
+		});
 	});
 </script>
