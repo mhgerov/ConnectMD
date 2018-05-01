@@ -44,13 +44,10 @@
 		newUser.date_of_birth = $('input[name="date_of_birth"]').val();
 		newUser.address = $('input[name="address"]').val();
 		newUser.care_plan = $('input[name="care_plan"]').val();
-		$.ajax({
-			type: "POST",
-			url: '/api/user',
-			data: newUser,
-			dataType: 'application/json'
-		}).then(function (res) {
-			window.location = "/";
-		});		
+		console.table(newUser);
+		$.post('/api/user',newUser).done((res) => {
+				console.log(res);
+				window.location.replace(res);;
+		});
 	});
 </script>

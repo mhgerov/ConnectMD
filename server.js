@@ -21,7 +21,7 @@ passport.deserializeUser(function(id, done) {
 	});
 });
 */
-
+/*
 passport.serializeUser(function(user, cb) {
   cb(null, user);
 });
@@ -45,7 +45,7 @@ passport.use(new LocalStrategy({usernameField:'email'},function(username, passwo
 		});
 	});
 }))
-
+*/
 
 //Load Handlebars
 var exphbs = require('express-handlebars');
@@ -67,8 +67,8 @@ app.use(require('cookie-parser')());
 var session = require('express-session');
 app.use(session({secret:'pickle rick',resave:true,saveUnintialized:true}));
 
-app.use(passport.initialize());
-app.use(passport.session());
+//app.use(passport.initialize());
+//app.use(passport.session());
 
 //Load Sequelize
 var models = require("./models");
@@ -85,6 +85,17 @@ var htmlRouter = require('./controllers/html-routes.js');
 var apiRouter = require('./controllers/api-routes.js');
 app.use('/',htmlRouter);
 app.use('/api',apiRouter);
+
+app.post('/api/user', function (req,res, next) {
+	console.log('POST /api/user Creating new user...')
+	var email = req.body.user;
+	var pwd = req.body.password;
+	models.User.create(req.body).then( (user) => {
+		console.log('non-middleware route');
+		res.send('/');
+		next();
+	});
+});
 
 //Start Server
 app.listen(PORT, function() {
