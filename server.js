@@ -6,40 +6,7 @@ var express = require('express');
 var app = express();
 
 //Load Passport
-var passport = require('passport');
-var LocalStrategy = require('passport-local').Strategy;
-var bcrypt = require('bcrypt');
-
-passport.serializeUser(function(user, done) {
-	console.log('connect-md: serializing...');
-  	done(null, user.id);
-});
-
-passport.deserializeUser(function(id, done) {
-	console.log('connect-md: deserializing...');
-	models.User.findById(id).then(function (user) {
-		console.log('deserialize success '+user.email);
-		done(null, user);
-	});
-});
-
-passport.use(new LocalStrategy({usernameField:'email'},function(username, password, done) {
-	console.log('Looking for username: '+username)
-	models.User.findOne({where:{email:username}}).then( (user) =>{
-		if (!user) { return done(null, false); }
-		bcrypt.compare(password,user.password).then( (res) => {
-			if(res) {
-				console.log('passport authenticate success!');
-				return done(null,user)
-			} else {
-				console.log('Wrong password!');
-				return done(null, false);
-			}
-		});
-	});
-}))
-
-
+var passport = require('./config/passport');
 
 //Load Handlebars
 var exphbs = require('express-handlebars');
@@ -69,16 +36,9 @@ var models = require("./models");
 
 models.sequelize.sync({force:false});
 
-
-
-//Load Passport Strategies
-//require('./config/passport.js')(passport,models.user);
-
 //Routing
-var htmlRouter = require('./controllers/html-routes.js');
-var apiRouter = require('./controllers/api-routes.js');
-app.use('/',htmlRouter);
-app.use('/api',apiRouter);
+app.use('/',require('./controllers/html-routes.js'));
+app.use('/api',require('./controllers/api-routes.js'));
 
 //Start Server
 app.listen(PORT, function() {
