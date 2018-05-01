@@ -1,6 +1,6 @@
 <div class="row">
 	<div class="container">
-		<header style="border-bottom: none; padding: 35px 0px;">
+		<header style="border-bottom: none; padding: 15px 0px;">
 
 			<div class="col-lg-3 col-6">
 				<div id="logo">
@@ -23,23 +23,7 @@
 
 	</div>
 </div>
-<br><br>
-<section class="slider" id="home">
-	<div class="container-fluid">
-		<div class="row">
-			<div class="carousel-inner" role="listbox">
-				<div class="item active">
-					<img src="/img/slide-four.jpg" style="margin:0%" alt="">
-					<div class="img-caption">
-						<h1></h1>
-						<p></p>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-</section>
-
+<br>
 <div style="font-family: 'Oswald', sans-serif;" class="container">
 	<h1 class="page-header">Sign In</h1>
 	<form>
@@ -58,6 +42,22 @@
 		</div>
 	</form>
 </div>
+<br>
+<section class="slider" id="home">
+	<div class="container-fluid">
+		<div class="row">
+			<div class="carousel-inner" role="listbox">
+				<div class="item active">
+					<img src="/img/slide-four.jpg" style="margin:0%" alt="">
+					<div class="carousel-caption">
+						<h1>Find your healthcare provider network doctor</h1>
+						<p></p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
 
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script>
@@ -67,6 +67,7 @@
 		loginInfo.email = $('input[name="email"]').val();
 		loginInfo.password = $('input[name="password"]').val();
 		console.table(loginInfo);
+
 		$.post('/api/signin', loginInfo, ).then((res) => {
 			console.log(res);
 			window.location.replace(res);
