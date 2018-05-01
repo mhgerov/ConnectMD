@@ -20,5 +20,10 @@ router.post('/user', function (req,res) {
 	});
 });
 
+//Return Lat/Long from address
+router.get('/latlong', function (req,res) {
+	console.log('Address: '+req.user.address);
+});
+
 module.exports = router;
 
