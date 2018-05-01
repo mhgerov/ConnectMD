@@ -8,7 +8,7 @@ function initMap() {
     zoom: 14,
     center: {
       lat: 33.748995,
-      lng: -87.387982
+      lng: -84.387982
     }
   }
   // make a new map

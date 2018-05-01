@@ -20,6 +20,20 @@ module.exports = function(sequelize, DataTypes) {
 			allowNull: false,
 			validate: {
 				notEmpty: true
+      }
+    },
+    lat: {
+			type: DataTypes.STRING,
+			allowNull: false,
+			validate: {
+				notEmpty: true
+			}
+    },
+    lng: {
+			type: DataTypes.STRING,
+			allowNull: false,
+			validate: {
+				notEmpty: true
 			}
 		},
 		phone: {
