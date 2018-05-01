@@ -34,7 +34,7 @@ app.use(passport.session());
 //Load Sequelize
 var models = require("./models");
 
-models.sequelize.sync({force:true});
+models.sequelize.sync({force:false});
 
 //Routing
 app.use('/',require('./controllers/html-routes.js'));

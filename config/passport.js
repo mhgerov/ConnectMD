@@ -6,7 +6,7 @@ var LocalStrategy = require('passport-local').Strategy;
 passport.use(new LocalStrategy({usernameField:'email'},function(username, password, done) {
 	console.log('Looking for username: '+username)
 	models.User.findOne({where:{email:username}}).then( (user) =>{
-		if (!user) { return done(null, false); }
+		if (!user) { console.log('User not found'); return done(null, false); }
 		bcrypt.compare(password,user.password).then( (res) => {
 			if(res) {
 				console.log('passport authenticate success!');
