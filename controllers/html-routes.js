@@ -3,7 +3,11 @@ var router = express.Router();
 var path = require('path');
 
 router.get('/', function (req, res) {
-	req.user ? res.render('/home') : res.render('landing');
+	if (req.user) {
+		res.render('home');
+	} else {
+		res.render('landing');
+	}
 });
 
 router.get('/home', require('connect-ensure-login').ensureLoggedIn('/'), function (req, res) {
