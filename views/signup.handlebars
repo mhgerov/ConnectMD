@@ -1,3 +1,28 @@
+<div class="row">
+	<div class="container">
+		<header style="border-bottom: none; padding: 35px 0px;">
+
+			<div class="col-lg-3 col-6">
+				<div id="logo">
+
+					<a href="/" title="ConnectMD">
+						<img src="img/logo.png" data-retina="true" alt="" width="150" height="75">
+					</a>
+
+				</div>
+			</div>
+			<ul class="nav navbar-nav navbar-right">
+				<li>
+					<a class="menu" href="/signup">Sign Up</a>
+				</li>
+				<li>
+					<a class="menu" href="/">Login</a>
+				</li>
+			</ul>
+		</header>
+
+	</div>
+</div>
 <div class="container">
 	<h1>Sign up</h1>
 	<form>
@@ -52,9 +77,9 @@
 		newUser.address = $('input[name="address"]').val();
 		newUser.care_plan = $('input[name="care_plan"]').val();
 		console.table(newUser);
-		$.post('/api/user',newUser).then((res) => {
-				console.log(res);
-				window.location.replace(res);;
+		$.post('/api/user', newUser).then((res) => {
+			console.log(res);
+			window.location.replace(res);;
 		});
 	});
 </script>

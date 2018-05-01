@@ -1,5 +1,31 @@
+<div class="row">
+	<div class="container">
+		<header style="border-bottom: none; padding: 35px 0px;">
+
+			<div class="col-lg-3 col-6">
+				<div id="logo">
+
+					<a href="/" title="ConnectMD">
+						<img src="img/logo.png" data-retina="true" alt="" width="150" height="75">
+					</a>
+
+				</div>
+			</div>
+			<ul class="nav navbar-nav navbar-right">
+				<li>
+					<a class="menu" href="/signup">Sign Up</a>
+				</li>
+				<li>
+					<a class="menu" href="/">Login</a>
+				</li>
+			</ul>
+		</header>
+
+	</div>
+</div>
+
 <section class="slider" id="home">
-	<div class="container-fluid" >
+	<div class="container-fluid">
 		<div class="row">
 			<div class="carousel-inner" role="listbox">
 				<div class="item active">
@@ -41,8 +67,8 @@
 		loginInfo.email = $('input[name="email"]').val();
 		loginInfo.password = $('input[name="password"]').val();
 		console.table(loginInfo);
-		$.post('/api/signin',loginInfo,).then( (res) => {
-			console.log(res);		
+		$.post('/api/signin', loginInfo, ).then((res) => {
+			console.log(res);
 			window.location.replace(res);
 		});
 	});
