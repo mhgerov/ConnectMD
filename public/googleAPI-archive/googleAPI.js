@@ -1386,7 +1386,6 @@ function handleLocationError(browserHasGeolocation, infoWindow, pos) {
   infoWindow.open(map);
 }
 
-
 //==============================================================================================================================
   //AJAX call for a specific address
 // var settings = {
