@@ -20,5 +20,10 @@ router.get('/signup', function (req, res) {
 	res.render('signup');
 });
 
+//Diagnostic page for Gmaps
+router.get('/gmaps', function (req, res) {
+	res.render('gmaps');
+});
+
 module.exports = router;
 
