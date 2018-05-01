@@ -1,4 +1,13 @@
 <div class="container">
     <h2 class="page-header">Dashboard</h2>
     <h1>Welcome home {{first_name}}!</h1>
+	<div id="map"></div>
+	<style>
+		#map {
+			height: 400px;
+		width: 600px;
+		}
+	</style>
+	<script src="js/maps.js"></script>
+	<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBv24nYTKrRcTsLRjgwBEcP1OkpwETmmeY&callback=initMap"></script>
 </div>
