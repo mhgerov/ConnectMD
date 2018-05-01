@@ -4,9 +4,9 @@ var path = require('path');
 
 router.get('/', function (req, res) {
 	if (req.user) {
-		res.render('/home');
+		res.render('home');
 	} else {
-		res.render('/landing');
+		res.render('landing');
 	}
 });
 
