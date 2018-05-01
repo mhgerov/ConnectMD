@@ -5,9 +5,9 @@ const saltRounds = 10;
 module.exports = (sequelize, DataTypes) => {
 	var User = sequelize.define('User', {
 		email: {
-			type: DataTypes.STRING,
+			type: DataTypes.STRING(160),
 			allowNull: false,
-			//unique: true,
+			unique: true,
 			validate: {
 				isEmail: true,
 			}
