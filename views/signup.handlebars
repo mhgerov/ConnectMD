@@ -45,7 +45,7 @@
 		newUser.address = $('input[name="address"]').val();
 		newUser.care_plan = $('input[name="care_plan"]').val();
 		console.table(newUser);
-		$.post('/api/user',newUser).done((res) => {
+		$.post('/api/user',newUser).then((res) => {
 				console.log(res);
 				window.location.replace(res);;
 		});

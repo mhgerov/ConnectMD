@@ -6,46 +6,7 @@ var express = require('express');
 var app = express();
 
 //Load Passport
-var passport = require('passport');
-var LocalStrategy = require('passport-local').Strategy;
-var bcrypt = require('bcrypt');
-
-/*
-passport.serializeUser(function(user, done) {
-  	done(null, user.id);
-});
-passport.deserializeUser(function(id, done) {
-	models.User.findById(id).then(function (user) {
-		console.log('deserialize success '+user.email);
-		done(null, user);
-	});
-});
-*/
-/*
-passport.serializeUser(function(user, cb) {
-  cb(null, user);
-});
-
-passport.deserializeUser(function(obj, cb) {
-  cb(null, obj);
-});
-
-passport.use(new LocalStrategy({usernameField:'email'},function(username, password, done) {
-	console.log('Looking for username: '+username)
-	models.User.findOne({where:{email:username}}).then( (user) =>{
-		if (!user) { return done(null, false); }
-		bcrypt.compare(password,user.password).then( (res) => {
-			if(res) {
-				console.log('passport authenticate success!');
-				return done(null,user)
-			} else {
-				console.log('Wrong password!');
-				return done(null, false);
-			}
-		});
-	});
-}))
-*/
+var passport = require('./config/passport');
 
 //Load Handlebars
 var exphbs = require('express-handlebars');
@@ -67,35 +28,17 @@ app.use(require('cookie-parser')());
 var session = require('express-session');
 app.use(session({secret:'pickle rick',resave:true,saveUnintialized:true}));
 
-//app.use(passport.initialize());
-//app.use(passport.session());
+app.use(passport.initialize());
+app.use(passport.session());
 
 //Load Sequelize
 var models = require("./models");
 
 models.sequelize.sync({force:false});
 
-
-
-//Load Passport Strategies
-//require('./config/passport.js')(passport,models.user);
-
 //Routing
-var htmlRouter = require('./controllers/html-routes.js');
-var apiRouter = require('./controllers/api-routes.js');
-app.use('/',htmlRouter);
-app.use('/api',apiRouter);
-
-app.post('/api/user', function (req,res, next) {
-	console.log('POST /api/user Creating new user...')
-	var email = req.body.user;
-	var pwd = req.body.password;
-	models.User.create(req.body).then( (user) => {
-		console.log('non-middleware route');
-		res.send('/');
-		next();
-	});
-});
+app.use('/',require('./controllers/html-routes.js'));
+app.use('/api',require('./controllers/api-routes.js'));
 
 //Start Server
 app.listen(PORT, function() {
