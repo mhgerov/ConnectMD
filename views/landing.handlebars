@@ -1,30 +1,52 @@
-<h1>Landing Page/Signin</h1>
-<form>
-	<div>
-	<label>Email:</label>
-	<input type="text" name="email"/><br/>
+
+<section class="slider" id="home">
+	<div class="container-fluid" >
+		<div class="row">
+			<div class="carousel-inner" role="listbox">
+				<div class="item active">
+					<img src="/img/slide-four.jpg" style="margin:0%" alt="">
+					<div class="img-caption">
+						<h1></h1>
+						<p></p>
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
-	<div>
-	<label>Password:</label>
-	<input type="password" name="password"/>
-	</div>
-	<div>
-	<input type="submit" value="Submit"/>
-	</div>
-</form>
+</section>
+
+<div class="container">
+	<h1 class="page-header">Sign In</h1>
+	<form>
+		<div>
+			<label>Email:</label>
+			<input type="email" class="form-control" name="email" />
+			<br/>
+		</div>
+		<div>
+			<label>Password:</label>
+			<input type="password" class="form-control" name="password" />
+		</div>
+		<br>
+		<div>
+			<input type="submit" class="btn btn-default" value="Submit" />
+		</div>
+	</form>
+</div>
+
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script>
-	$('form').submit(function(evt) {
+	$('form').submit(function (evt) {
 		evt.preventDefault();
 		var loginInfo = {};
 		loginInfo.email = $('input[name="email"]').val();
 		loginInfo.password = $('input[name="password"]').val();
 		console.table(loginInfo);
-		$.ajax({
-			type: "POST",
-			url: '/api/signin',
-			data: loginInfo,
-			dataType: 'application/json'
-		}).then( (res) => console.log('anything'));		
+
+		$.post('/api/signin',loginInfo,).then( (res) => {
+			console.log(res);		
+			window.location.replace(res);
+		});
 	});
 </script>
+

@@ -1,28 +1,46 @@
-var express = require('express');
-var exphbs = require('express-handlebars');
-var bodyParser = require('body-parser');
-var app = express();
+//Set port number
 var PORT = process.env.PORT || 3000;
-var htmlRouter = require('./controllers/html-routes.js');
-var apiRouter = require('./controllers/api-routes.js');
 
-// Requiring our models for syncing
-var db = require("./models");
+//Load Express
+var express = require('express');
+var app = express();
 
+//Load Passport
+var passport = require('./config/passport');
+
+//Load Handlebars
+var exphbs = require('express-handlebars');
 app.engine('handlebars', exphbs({defaultLayout: 'main'}));
 app.set('view engine', 'handlebars');
 
+//Set static files
+app.use(express.static('public'));
+
+//Load body-parser
+var bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json());
 
-app.use(express.static('public'));
+//Load cookie-parser
+app.use(require('cookie-parser')());
 
-app.use('/',htmlRouter);
-app.use('/api',apiRouter);
+//Load Express Session
+var session = require('express-session');
+app.use(session({secret:'pickle rick',resave:true,saveUnintialized:true}));
 
+app.use(passport.initialize());
+app.use(passport.session());
 
-db.sequelize.sync({ force: true }).then(function() {
-  app.listen(PORT, function() {
-    console.log("App listening on PORT " + PORT);
-  });
+//Load Sequelize
+var models = require("./models");
+
+models.sequelize.sync({force:false});
+
+//Routing
+app.use('/',require('./controllers/html-routes.js'));
+app.use('/api',require('./controllers/api-routes.js'));
+
+//Start Server
+app.listen(PORT, function() {
+	console.log("App listening on PORT " + PORT);
 });

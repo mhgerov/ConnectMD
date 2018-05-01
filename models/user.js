@@ -1,55 +1,63 @@
-module.exports = function(sequelize, DataTypes) {
-  var User = sequelize.define("User", {
-    firstName: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        len: [1]
-      }
-    },
-    lastName: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        len: [1]
-      }
-    },
-    email: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        len: [1]
-      }
-    },
-    password: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        len: [1]
-      }
-    },
-    address: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        len: [1]
-      }
-    },
-    dateOfBirth: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        len: [1]
-      }
-    },
-    plan: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        len: [1]
-      }
-    },
-  });
+var bcrypt = require('bcrypt');
+const saltRounds = 10;
 
-  return User;
+'use strict';
+module.exports = (sequelize, DataTypes) => {
+	var User = sequelize.define('User', {
+		email: {
+			type: DataTypes.STRING(160),
+			allowNull: false,
+			unique: true,
+			validate: {
+				isEmail: true,
+			}
+		},
+		password: DataTypes.STRING,
+		first_name: {
+			type: DataTypes.STRING,
+			allowNull: false,
+			validate: {
+				notEmpty: true
+			}
+		},
+		last_name: {
+			type: DataTypes.STRING,
+			allowNull: false,
+			validate: {
+				notEmpty: true
+			}
+		},
+		date_of_birth: {
+			type: DataTypes.DATE,
+			allowNull: false,
+			validate: {
+				isDate: true
+			}
+		},
+		address: {
+			type: DataTypes.STRING,
+			allowNull: false,
+			validate: {
+				notEmpty: true,
+			}
+		},
+		care_plan: {
+			type: DataTypes.STRING,
+			allowNull: false,
+			validate: {
+				notEmpty: true,
+			}
+		},
+	}, {indexes:[{fields:['email']}]});
+	User.associate = function(models) {
+		// associations can be defined here
+		User.hasMany(models.Appointment);
+	};
+	User.hook('beforeCreate', (user,options) => {
+		return bcrypt.hash(user.password, saltRounds).then(function (hash) {
+			user.password = hash;
+		});
+	});
+		
+	return User;
 };
