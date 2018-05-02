@@ -20,6 +20,10 @@ router.get('/signup', function (req, res) {
 	res.render('signup');
 });
 
+router.get('/signin', function (req, res) {
+	res.render('signin');
+});
+
 //Diagnostic page for Gmaps
 router.get('/gmaps', function (req, res) {
 	res.render('gmaps');

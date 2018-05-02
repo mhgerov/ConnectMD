@@ -16,7 +16,7 @@ router.post('/user', function (req,res) {
 	console.log('POST /api/user Creating new user...')
 	models.User.create(req.body).then( (user) => {
 		console.log('User built, redirecting...');
-		res.json('/');
+		res.json('/signin');
 	});
 });
 
